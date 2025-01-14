@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bp3y2ur5gqr65" path="res://player.tscn" id="1_s4kvi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jcgqj"]
-size = Vector3(160.101, 2, 169.689)
+size = Vector3(102.452, 2, 103.107)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ulqn0"]
 
@@ -12,6 +12,7 @@ size = Vector3(160.101, 2, 169.689)
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.537109, 0, -0.0737152)
 shape = SubResource("BoxShape3D_jcgqj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
@@ -28,7 +29,7 @@ shadow_bias = 0.0
 transform = Transform3D(1, 0, 0, 0, 1, 1.74846e-07, 0, -1.74846e-07, 1, -45, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="camera pivot"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 40.9339, 55.8362, 101.876)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.697, 16.4415, 10.2518)
 near = 0.023
 
 [node name="Node3D" parent="." instance=ExtResource("1_s4kvi")]
