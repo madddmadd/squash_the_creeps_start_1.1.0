@@ -1,15 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://dq6b2is867qfn"]
+[gd_scene load_steps=8 format=3 uid="uid://dq6b2is867qfn"]
 
+[ext_resource type="Script" path="res://map.gd" id="1_o2i08"]
 [ext_resource type="PackedScene" uid="uid://bp3y2ur5gqr65" path="res://player.tscn" id="1_s4kvi"]
+[ext_resource type="PackedScene" uid="uid://ds6x0imecqows" path="res://mob.tscn" id="2_mhs0b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jcgqj"]
 size = Vector3(102.452, 2, 103.107)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n5227"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_ulqn0"]
 
+[sub_resource type="Curve3D" id="Curve3D_vv5ua"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -34.9198, 0, -35.7115, 0, 0, 0, 0, 0, 0, 31.3639, 0, -38.1169, 0, 0, 0, 0, 0, 0, 34.5712, 0, 41.5304, 0, 0, 0, 0, 0, 0, -38.6616, 0, 39.3923, 0, 0, 0, 0, 0, 0, -34.9198, 0, -35.7115),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
 [node name="map" type="Node3D"]
+script = ExtResource("1_o2i08")
+mob_scene = ExtResource("2_mhs0b")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.537109, 0, -0.0737152)
@@ -17,20 +34,36 @@ shape = SubResource("BoxShape3D_jcgqj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(100, 0, 0, 0, 2, 0, 0, 0, 100, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_n5227")
 mesh = SubResource("BoxMesh_ulqn0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.0175617, -0.998759, 0.0466167, 0.0566563, 0.0475431, 0.997261, -0.998239, -0.0148725, 0.0574209, -1.15512, 45.6157, -0.405758)
-light_energy = 3.575
+transform = Transform3D(0.0175617, -0.998758, 0.0466168, 0.0566563, 0.0475431, 0.997261, -0.998239, -0.0148725, 0.0574209, -28.5706, 45.6157, 47.891)
+light_energy = 2.0
 shadow_enabled = true
 shadow_bias = 0.0
 
 [node name="camera pivot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 1.74846e-07, 0, -1.74846e-07, 1, -45, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.688354, 0.725374, 0, -0.725374, 0.688354, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="camera pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.697, 16.4415, 10.2518)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.32854, 0.127546, 37.0538)
 near = 0.023
 
-[node name="Node3D" parent="." instance=ExtResource("1_s4kvi")]
+[node name="player" parent="." instance=ExtResource("1_s4kvi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1088, 1.43231, -5.97905)
+bounce_impulse = 16
+fall_accel = 75
+jump_impulse = 200
+
+[node name="SpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_vv5ua")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(0.0362667, 0, -0.999342, 0, 1, 0, 0.999342, 0, 0.0362667, -34.9198, 0, -35.7115)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

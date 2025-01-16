@@ -6,7 +6,9 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_2u6ee"]
 size = Vector3(2.20801, 1.84265, 2.0127)
 
-[node name="Node3D" type="CharacterBody3D"]
+[node name="Node3D" type="CharacterBody3D" groups=["mob"]]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_wmcl4")
 
 [node name="mob" parent="." instance=ExtResource("2_afhix")]
